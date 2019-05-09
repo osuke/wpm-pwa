@@ -1,5 +1,5 @@
 <template>
-  <button>
+  <button @click="clickHandler">
     <slot></slot>
   </button>
 </template>
@@ -10,6 +10,16 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 @Component
 export default class Button extends Vue {
   @Prop() private text!: string;
+  @Prop() private callbackFunc!: () => void;
+
+  get clickHandler() {
+    if (this.callbackFunc) {
+      return this.callbackFunc;
+    } else {
+      // tslint:disable-next-line
+      return () => {};
+    }
+  }
 }
 </script>
 

@@ -1,11 +1,15 @@
 <template>
   <div class="container">
+    <Time :time="time" />
     <div class="buttons">
       <div class="button">
-        <Button>x</Button>
+        <Button :callbackFunc="reset">x</Button>
       </div>
-      <div class="button">
-        <Button>></Button>
+      <div class="button" v-if="!isPlay">
+        <Button :callbackFunc="start">></Button>
+      </div>
+      <div class="button" v-if="isPlay">
+        <Button :callbackFunc="stop">■</Button>
       </div>
     </div>
   </div>
@@ -14,13 +18,39 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import Button from '@/components/Button.vue';
+import Time from '@/components/Time.vue';
 
 @Component({
   components: {
     Button,
+    Time,
   },
 })
 export default class Controller extends Vue {
+  private isPlay = false;
+  private timerID!: number;
+
+  private start() {
+    this.isPlay = true;
+
+    this.timerID = setInterval(() => {
+      this.$store.dispatch('startMeasurement');
+    }, 10);
+  }
+
+  private stop() {
+    this.isPlay = false;
+    clearInterval(this.timerID);
+  }
+
+  private reset() {
+    this.$store.dispatch('resetMeasurement');
+    this.stop();
+  }
+
+  get time() {
+    return this.$store.state.calc.time;
+  }
 }
 </script>
 
@@ -33,6 +63,7 @@ export default class Controller extends Vue {
   left: 0;
   bottom: 0;
   box-sizing: border-box;
+  background: #222;
 }
 
 .buttons {

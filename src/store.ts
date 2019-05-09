@@ -1,12 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators';
+import Calc from './stores/Calc';
 
 Vue.use(Vuex);
 
 @Module
 class Content extends VuexModule {
-  private text = 'paste your english text here';
+  private text = 'This is awesome sentence';
 
   @Mutation
   private mutateSentence(payload: string) {
@@ -22,5 +23,6 @@ class Content extends VuexModule {
 export default new Vuex.Store({
   modules: {
     content: Content,
+    calc: Calc,
   },
 });

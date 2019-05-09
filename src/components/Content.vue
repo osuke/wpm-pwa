@@ -50,7 +50,7 @@ export default class Content extends Vue {
   background: none;
   color: #adadad;
   font-size: 1.6rem;
-  padding: 12px;
+  padding: 12px 12px 68px;
   box-sizing: border-box;
   line-height: 1.5;
 }
