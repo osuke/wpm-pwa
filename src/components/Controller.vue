@@ -12,6 +12,12 @@
         <Button :callbackFunc="stop">■</Button>
       </div>
     </div>
+    <transition name="result">
+      <div class="modal" v-if="showResult">
+        <div class="modalContent">{{ result }}</div>
+        <div class="closeButton" @click="showResult = !showResult">x</div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -19,6 +25,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import Button from '@/components/Button.vue';
 import Time from '@/components/Time.vue';
+import calcResult from '@/utils/calcResult';
 
 @Component({
   components: {
@@ -28,6 +35,7 @@ import Time from '@/components/Time.vue';
 })
 export default class Controller extends Vue {
   private isPlay = false;
+  private showResult = false;
   private timerID!: number;
 
   private start() {
@@ -40,16 +48,23 @@ export default class Controller extends Vue {
 
   private stop() {
     this.isPlay = false;
+    this.showResult = true;
     clearInterval(this.timerID);
   }
 
   private reset() {
+    this.isPlay = false;
+    this.showResult = false;
+    clearInterval(this.timerID);
     this.$store.dispatch('resetMeasurement');
-    this.stop();
   }
 
   get time() {
     return this.$store.state.calc.time;
+  }
+
+  get result() {
+    return calcResult(this.$store.state.content.text, this.$store.state.calc.time);
   }
 }
 </script>
@@ -72,5 +87,8 @@ export default class Controller extends Vue {
 }
 .button {
   margin-left: 8px;
+}
+.modal {
+  color: #fff;
 }
 </style>
