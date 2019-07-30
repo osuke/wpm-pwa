@@ -1,10 +1,10 @@
 <template>
-  <div class="container">
-    <div class="tabs">
-      <span class="tab" @click="showReading">R</span>
-      <span class="tab" @click="showEditor">E</span>
-    </div>
-    <div class="content">
+  <div>
+    <v-tabs centered>
+      <v-tab @click="showReading">READING</v-tab>
+      <v-tab @click="showEditor">EDITING</v-tab>
+    </v-tabs>
+    <div class="pa-3">
       <Reading v-if="tabIndex === 0" :sentence="sentence" />
       <Editor v-if="tabIndex === 1" :sentence="sentence" />
     </div>
@@ -40,31 +40,3 @@ export default class Content extends Vue {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-.container {
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: none;
-  color: #adadad;
-  font-size: 1.6rem;
-  padding: 12px 12px 68px;
-  box-sizing: border-box;
-  line-height: 1.5;
-}
-.tabs {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 24px;
-}
-.tab {
-  display: block;
-  width: 100px;
-  height: 32px;
-  line-height: 32px;
-  background: #333;
-  text-align: center;
-}
-</style>

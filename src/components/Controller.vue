@@ -12,12 +12,33 @@
         <Button :callbackFunc="stop">■</Button>
       </div>
     </div>
-    <Modal
-      :visibility="showResult"
-      :closeHandler="hideResult"
+
+    <v-layout
+      justify-center
+      wrap
     >
-      <div>{{ result }}</div>
-    </Modal>
+      <v-dialog
+        v-model="dialog"
+        max-width="290"
+      >
+        <v-card>
+          <v-card-title class="headline">WPM SCORE</v-card-title>
+
+          <v-card-text class="display-1">{{ result }}</v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+
+            <v-btn
+              text
+              @click="dialog = false"
+            >
+              CLOSE
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
   </div>
 </template>
 
@@ -36,13 +57,16 @@ import calcResult from '@/utils/calcResult';
   },
 })
 export default class Controller extends Vue {
+  @Prop() private value!: boolean;
+
+  private dialog = false;
   private isPlay = false;
-  private showResult = false;
   private timerID!: number;
 
   private start() {
     this.isPlay = true;
 
+    this.dialog = false;
     this.timerID = setInterval(() => {
       this.$store.dispatch('startMeasurement');
     }, 10);
@@ -50,19 +74,15 @@ export default class Controller extends Vue {
 
   private stop() {
     this.isPlay = false;
-    this.showResult = true;
+    this.dialog = true;
     clearInterval(this.timerID);
   }
 
   private reset() {
     this.isPlay = false;
-    this.showResult = false;
+    this.dialog = false;
     clearInterval(this.timerID);
     this.$store.dispatch('resetMeasurement');
-  }
-
-  private hideResult() {
-    this.showResult = false;
   }
 
   get time() {

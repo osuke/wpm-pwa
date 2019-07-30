@@ -1,8 +1,10 @@
 <template>
-  <div id="app">
-    <Content />
-    <Controller />
-  </div>
+  <v-app>
+    <div id="app">
+      <Content />
+      <Controller />
+    </div>
+  </v-app>
 </template>
 
 <script lang="ts">
@@ -25,14 +27,11 @@ export default class App extends Vue {
 html {
   font-family: sans-serif;
   font-size: 10px;
-  color: #1e1e1e;
   height: 100%;
 }
 
 body {
   background: #222;
-  padding: 12px;
   height: 100%;
-  box-sizing: border-box;
 }
 </style>
