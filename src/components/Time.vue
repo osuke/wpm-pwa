@@ -1,5 +1,9 @@
 <template>
-  <div class="time">{{ formattedTime }}</div>
+  <v-layout align-center>
+    <v-flex>
+      <div class="title text-center">{{ formattedTime }}</div>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script lang="ts">
@@ -30,9 +34,3 @@ export default class Time extends Vue {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
-.time {
-  color: #fff;
-}
-</style>

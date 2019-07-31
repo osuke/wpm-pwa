@@ -1,17 +1,17 @@
 <template>
-  <div class="container">
-    <Time :time="time" />
-    <div class="buttons">
-      <div class="button">
-        <Button :callbackFunc="reset">x</Button>
-      </div>
-      <div class="button" v-if="!isPlay">
-        <Button :callbackFunc="start">></Button>
-      </div>
-      <div class="button" v-if="isPlay">
-        <Button :callbackFunc="stop">■</Button>
-      </div>
-    </div>
+  <div>
+    <v-bottom-navigation fixed>
+      <Time :time="time" />
+      <v-btn @click="reset">
+        <v-icon>mdi-loop</v-icon>
+      </v-btn>
+      <v-btn @click="start" v-if="!isPlay">
+        <v-icon>mdi-play</v-icon>
+      </v-btn>
+      <v-btn @click="stop" v-if="isPlay">
+        <v-icon>mdi-stop</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
 
     <v-layout
       justify-center
